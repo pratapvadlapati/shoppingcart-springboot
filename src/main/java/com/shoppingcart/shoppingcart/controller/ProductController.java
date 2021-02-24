@@ -2,13 +2,11 @@ package com.shoppingcart.shoppingcart.controller;
 
 import java.util.List;
 
-import javax.ws.rs.Path;
-
+import com.shoppingcart.shoppingcart.Exceptions.ProductNotFound;
 import com.shoppingcart.shoppingcart.model.Product;
 import com.shoppingcart.shoppingcart.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +29,7 @@ public class ProductController {
     // get all products
 
     @GetMapping(path = "/all/products")
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts() throws ProductNotFound {
 
         return productService.getAllProduct();
     }

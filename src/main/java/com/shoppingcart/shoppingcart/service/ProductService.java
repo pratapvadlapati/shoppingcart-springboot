@@ -3,6 +3,7 @@ package com.shoppingcart.shoppingcart.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.shoppingcart.shoppingcart.Exceptions.ProductNotFound;
 import com.shoppingcart.shoppingcart.model.Product;
 import com.shoppingcart.shoppingcart.repository.ProductRepository;
 
@@ -22,11 +23,15 @@ public class ProductService {
     // get all products
     public List<Product> getAllProduct() {
 
+        if (productRepository.findAll().isEmpty()) {
+            throw new ProductNotFound("product not found");
+        }
+
         return productRepository.findAll();
 
     }
 
-    // save product
+    // save product //
     public Product saveProduct(Product product) {
 
         return productRepository.save(product);
@@ -45,7 +50,7 @@ public class ProductService {
             return productRepository.save(updatedProduct);
 
         }
-        return null;
+        throw new ProductNotFound("Product Id" + " " + product_Id + " " + "not found to update!");
 
     }
 

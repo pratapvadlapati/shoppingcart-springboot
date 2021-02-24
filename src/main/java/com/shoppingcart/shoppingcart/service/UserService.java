@@ -2,6 +2,7 @@ package com.shoppingcart.shoppingcart.service;
 
 import java.util.Optional;
 
+import com.shoppingcart.shoppingcart.Exceptions.Unauthorized;
 import com.shoppingcart.shoppingcart.model.User;
 import com.shoppingcart.shoppingcart.repository.UserRepository;
 
@@ -31,7 +32,7 @@ public class UserService {
 
         if (!userRepository.findById(user_id).isPresent()) {
 
-            throw new IllegalStateException("no user found!");
+            throw new Unauthorized("no user found!");
         }
 
         return userRepository.findById(user_id);
@@ -43,7 +44,7 @@ public class UserService {
 
         if (!userRepository.findById(user_id).isPresent()) {
 
-            throw new IllegalStateException("no user found!");
+            throw new Unauthorized("no user found!");
         }
 
         userRepository.deleteById(user_id);
@@ -66,7 +67,7 @@ public class UserService {
         if (pswd.equals(password)) {
             return usr;
         }
-        return null;
+        throw new Unauthorized("Username or password mismatched!");
 
     }
 
