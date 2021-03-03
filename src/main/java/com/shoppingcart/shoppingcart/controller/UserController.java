@@ -2,6 +2,7 @@ package com.shoppingcart.shoppingcart.controller;
 
 import java.util.Optional;
 
+import com.shoppingcart.shoppingcart.Exceptions.Unauthorized;
 import com.shoppingcart.shoppingcart.model.User;
 import com.shoppingcart.shoppingcart.service.UserService;
 
@@ -24,9 +25,9 @@ public class UserController {
     }
 
     // save user
-    @PostMapping(path = "user")
+    @PostMapping(path = "/user")
     public Object registerUser(@RequestBody User user) {
-
+        System.out.println("controller: " + user);
         return userService.saveUser(user);
     }
 

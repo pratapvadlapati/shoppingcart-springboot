@@ -8,23 +8,29 @@ import com.shoppingcart.shoppingcart.repository.UserRepository;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     // saveUser
     public User saveUser(User user) {
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+
     }
 
     // getUserById
@@ -62,9 +68,9 @@ public class UserService {
         String password = obj.getString("password");
 
         Optional<User> usr = userRepository.findByEmail(email);
-        String pswd = usr.get().getPassword();
+        String encodedPswd = usr.get().getPassword();
 
-        if (pswd.equals(password)) {
+        if (passwordEncoder.matches(password, encodedPswd)) {
             return usr;
         }
         throw new Unauthorized("Username or password mismatched!");

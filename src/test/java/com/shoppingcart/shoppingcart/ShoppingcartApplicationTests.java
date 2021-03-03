@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import com.jayway.jsonpath.Option;
 import com.shoppingcart.shoppingcart.model.User;
 import com.shoppingcart.shoppingcart.repository.UserRepository;
 import com.shoppingcart.shoppingcart.service.UserService;
@@ -47,6 +46,12 @@ class ShoppingcartApplicationTests {
 		Optional<User> returnedUser = Optional.of(user);
 		when(userRepository.findById(id)).thenReturn(returnedUser);
 		assertEquals(true, userService.getUserById(id).isPresent());
+	}
+
+	@Test
+	public void deleteUserById() {
+		//
+
 	}
 
 }
